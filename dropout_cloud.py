@@ -33,8 +33,13 @@ def main():
 
   print("Done.")
 
-  dropped = pcd.select_by_index(np.where(noise < 0.6)[0])
-  o3d.visualization.draw_geometries([dropped])
+  dropped = np.where(noise > 0.6)[0]
+  keep = np.where(noise <= 0.6)[0]
+
+  o3d.visualization.draw_geometries([  
+    pcd.select_by_index(dropped).paint_uniform_color([1, 0, 0]),
+    pcd.select_by_index(keep)
+  ])
 
 
 if __name__ == '__main__':

@@ -25,7 +25,7 @@ def main():
 
 
   gen = NoiseGenerator3D()
-  scales = tuple([(s * args.scale, w * args.weight) 
+  scales = tuple([(s * args.scale, w) 
             for s, w in [(1, 1), (0.5, 0.5), (0.25, 0.25)]])
 
 
@@ -36,7 +36,9 @@ def main():
 
   print("Done.")
 
-  pcd.points = o3d.utility.Vector3dVector(points + offsets)
+  pcd.points = o3d.utility.Vector3dVector(points + offsets * args.weight)
+  pcd.colors = o3d.utility.Vector3dVector(offsets * 2 + 0.5)
+
   o3d.visualization.draw_geometries([pcd])
 
 
