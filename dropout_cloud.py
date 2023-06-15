@@ -17,8 +17,8 @@ def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('filename', type=Path)
 
-  parser.add_argument('--noise_scale', type=float, default=0.2)
-  parser.add_argument('--octaves', type=int, default=8)
+  parser.add_argument('--noise_scale', type=float, default=0.1)
+  parser.add_argument('--octaves', type=int, default=6)
   parser.add_argument('--octave_scale', type=float, default=1.2)
 
   parser.add_argument('--dir_scale', type=float, default=0.2)

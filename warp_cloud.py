@@ -24,8 +24,8 @@ def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('filename', type=Path)
 
-  parser.add_argument('--scale', type=float, default=0.5)
-  parser.add_argument('--magnitude', type=float, default=0.5)
+  parser.add_argument('--scale', type=float, default=2.0)
+  parser.add_argument('--magnitude', type=float, default=0.004)
 
   
   args = parser.parse_args()
