@@ -6,7 +6,7 @@ import open3d as o3d
 
 import taichi as ti
 
-from perlin_3d import NoiseGenerator3D
+from taichi_perlin.perlin_3d import NoiseGenerator3D
 
 def vector_pow(v, p):
     mag = np.linalg.norm(v, axis=1)
