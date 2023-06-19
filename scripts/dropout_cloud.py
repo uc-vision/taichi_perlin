@@ -1,5 +1,4 @@
 import argparse
-from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
@@ -8,7 +7,6 @@ import open3d as o3d
 import taichi as ti
 from tqdm import tqdm
 
-from taichi_perlin.perlin_3d import NoiseGenerator3D
 import torch
 
 from taichi_perlin.dropout_3d import DropoutParams, PointDropout
