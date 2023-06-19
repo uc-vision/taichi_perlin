@@ -27,7 +27,7 @@ def parse_args():
 
 
   parser.add_argument('--peturb_distance', type=float, default=0.005)
-  parser.add_argument('--peturb_scale', type=float, default=0.2)
+  parser.add_argument('--peturb_dir_scale', type=float, default=0.2)
 
   args = parser.parse_args()
 
@@ -39,7 +39,7 @@ def parse_args():
     dropout_proportion=args.dropout,
 
     peturb_proportion=args.peturb,
-    peturb_scale=args.peturb_scale,
+    peturb_dir_scale=args.peturb_dir_scale,
     peturb_distance=args.peturb_distance
   )
 

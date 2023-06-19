@@ -6,16 +6,21 @@ import torch
 
 @dataclass 
 class DropoutParams:
+  # controls the scale/base frequency of noise - larger = bigger areas, smaller
   noise_scale: float
-
   octaves: int
-  freq_multiplier: float
 
-  dropout_proportion: float
-  peturb_proportion: float
+  # controls the frequency of the noise 0.5 - uniform dropout 2.0 smooth coherent dropout
+  freq_multiplier: float  
 
-  peturb_scale: float
-  peturb_distance: float
+  dropout_proportion: float # proportion of points to drop completely
+  peturb_proportion: float  # proportion of points to peturb
+
+  # controls the frequency which the peturbed directions change
+  # use smaller number to give 0 mean noise, larger to give biased noise
+  peturb_bias_scale: float  
+  
+  peturb_distance: float # controls the magnitude of the peturbation
 
 class PointDropout:
   def __init__(self, params: DropoutParams):
@@ -25,7 +30,7 @@ class PointDropout:
       (params.noise_scale * 1/(2**i), 1/(params.freq_multiplier**i)) for i in range(params.octaves)]
 
     self.gen = NoiseGenerator3D(scales)
-    self.gen_vec = NoiseGenerator3D( [(params.peturb_scale, 1)])
+    self.gen_vec = NoiseGenerator3D( [(params.peturb_bias_scale, 1)])
 
   def __call__(self, points: torch.Tensor, seed: int = None):
 
