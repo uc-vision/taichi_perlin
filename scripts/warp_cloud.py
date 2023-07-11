@@ -36,7 +36,7 @@ def main():
   gen = NoiseGenerator3D()
 
   scales = ((1, 1), (0.5, 1), (0.25, 1), (0.125, 1))
-  scales = tuple([(args.scale * s, w) for s, w in scales])
+  scales = tuple([(s, w) for s, w in scales])
 
   args = parser.parse_args()
 
@@ -46,7 +46,7 @@ def main():
 
 
   offsets = np.zeros_like(points)
-  gen.sample_vec_kernel(points, offsets, scales)
+  gen.sample_vec_kernel(points, offsets, scales, args.scale)
 
   pcd.points = o3d.utility.Vector3dVector(points + vector_pow(offsets, 2) * args.magnitude )
   o3d.visualization.draw([pcd])

@@ -77,25 +77,25 @@ class NoiseGenerator3D():
   @ti.kernel
   def sample_vec_kernel(self, points:ti.types.ndarray(dtype=tm.vec3, ndim=1),
                      vectors:ti.types.ndarray(dtype=tm.vec3, ndim=1), 
-                     seed:ti.i32):
+                     seed:ti.i32, base_scale:ti.f32):
     for i in range(points.shape[0]):
       vectors[i] = tm.vec3(0.0)
       
       for (scale, weight) in ti.static(self.scales):
-        p = points[i] / scale
+        p = points[i] / (base_scale * scale)
         vectors[i] += self.perlin_grad_3d(p, seed) * weight
     
   @ti.kernel
   def sample_kernel(self, points:ti.types.ndarray(dtype=tm.vec3, ndim=1),
                      out:ti.types.ndarray(dtype=ti.f32, ndim=1), 
-                     seed:ti.i32, noise_scale:ti.f32):
+                     seed:ti.i32, base_scale:ti.f32):
     
     for i in range(points.shape[0]):
       x:ti.f32 = 0.0
       
       for (scale, weight) in ti.static(self.scales):
         
-        p = points[i] / (noise_scale * scale)
+        p = points[i] / (base_scale * scale)
         x += self.perlin_3d(p, seed) * weight
         
       out[i] = x / 2 + 0.5

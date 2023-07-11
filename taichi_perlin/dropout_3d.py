@@ -31,10 +31,16 @@ class DropoutParams:
       return np.random.uniform(x[0], x[1])
     else:
       return x
+    
+  def _log_randomize(self, x):
+    if isinstance(x, Tuple):
+      return np.exp(np.random.uniform(np.log(x[0]), np.log(x[1])))
+    else:
+      return x
 
   def randomize(self) -> 'DropoutParams':
     return replace(self, 
-                  noise_scale=self._randomize(self.noise_scale),
+                  noise_scale=self._log_randomize(self.noise_scale),
                   dropout=self._randomize(self.dropout),
                   peturb=self._randomize(self.peturb),
                   peturb_distance=self._randomize(self.peturb_distance)
@@ -60,7 +66,7 @@ class PointDropout:
     params = self.params.randomize()
 
     noise = torch.zeros((points.shape[0],), dtype=torch.float32, device=points.device)
-    self.gen.sample_kernel(points, noise, seed=seed, noise_scale=params.noise_scale)
+    self.gen.sample_kernel(points, noise, seed=seed, base_scale=params.noise_scale)
 
     quantiles = torch.tensor([min(1, params.dropout + params.peturb), params.dropout]).to(device=points.device)
     t_noisy, t_drop = torch.quantile(noise, quantiles)
