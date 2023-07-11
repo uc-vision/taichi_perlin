@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Tuple
 import numpy as np
 
@@ -32,12 +32,16 @@ class DropoutParams:
     else:
       return x
 
-  def randomize(self):
-    self.noise_scale = self._randomize(self.noise_scale)
-    self.dropout = self._randomize(self.dropout)
-    self.peturb = self._randomize(self.peturb)
-    self.peturb_distance = self._randomize(self.peturb_distance)
+  def randomize(self) -> 'DropoutParams':
+    return replace(self, 
+                  noise_scale=self._randomize(self.noise_scale),
+                  dropout=self._randomize(self.dropout),
+                  peturb=self._randomize(self.peturb),
+                  peturb_distance=self._randomize(self.peturb_distance)
+                )
+  
 
+    
 class PointDropout:
   def __init__(self, params: DropoutParams):
     self.params = params

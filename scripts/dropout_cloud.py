@@ -27,19 +27,19 @@ def parse_args():
 
 
   parser.add_argument('--peturb_distance', type=float, default=0.005)
-  parser.add_argument('--peturb_dir_scale', type=float, default=0.2)
+  parser.add_argument('--peturb_bias', type=float, default=0.2)
 
   args = parser.parse_args()
 
   params = DropoutParams(
     noise_scale=args.noise_scale,
-
     octaves=args.octaves,
     freq_multiplier=args.freq_multiplier,
-    dropout_proportion=args.dropout,
+    
+    dropout=args.dropout,
+    peturb=args.peturb,
 
-    max_peturb=args.peturb,
-    peturb_dir_scale=args.peturb_dir_scale,
+    peturb_bias=args.peturb_bias,
     peturb_distance=args.peturb_distance
   )
 
