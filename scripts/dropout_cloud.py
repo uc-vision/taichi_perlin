@@ -38,7 +38,7 @@ def parse_args():
     freq_multiplier=args.freq_multiplier,
     dropout_proportion=args.dropout,
 
-    peturb_proportion=args.peturb,
+    max_peturb=args.peturb,
     peturb_dir_scale=args.peturb_dir_scale,
     peturb_distance=args.peturb_distance
   )
