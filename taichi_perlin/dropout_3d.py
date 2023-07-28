@@ -77,7 +77,7 @@ class PointDropout:
     noise = 1 - torch.clamp((noise[keep] - t_drop) / (t_noisy - t_drop), 0, 1)
 
     dirs = torch.zeros_like(points)
-    self.gen_vec.sample_vec_kernel(points, dirs, seed=seed)
+    self.gen_vec.sample_vec_kernel(points, dirs, base_scale=params.noise_scale, seed=seed)
     dirs /= torch.norm(dirs, dim=1).reshape(-1, 1)
 
     points = points + (dirs * noise.reshape(-1, 1)) * params.peturb_distance
